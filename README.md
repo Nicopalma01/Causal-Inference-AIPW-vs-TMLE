@@ -1,1 +1,6 @@
 # Causal-Inference-AIPW-vs-TMLE
+This project investigates how reliably modern causal inference methods can recover a known treatment effect when the data are observational and heavily confounded. Using the National Supported Work (NSW) job-training experiment as a benchmark, I combined its 185 treated units with roughly 15,000 control units from the PSID/CPS surveys, deliberately recreating strong selection bias and poor overlap between treated and untreated groups.
+
+I compared two doubly robust estimators of the Average Treatment Effect: Augmented Inverse Probability Weighting (AIPW) and Targeted Maximum Likelihood Estimation (TMLE), the latter in both a machine-learning and a deep-learning variant. Propensity scores were estimated generatively, using class-conditional Gaussian Mixture Models and Bayes’ theorem, with the number of components chosen to balance overlap and BIC. Coarsened Exact Matching was used to pre-balance the data, while Random Forest, Gradient Boosting and a fully connected neural network served as outcome models, tuned through nested cross-validation.
+
+Results were evaluated against the experimental benchmark of 1794.34. TMLE with a neural-network outcome model came closest (1773.69) with the smallest standard error, while AIPW and TMLE with tree-based models remained far from the benchmark, with wide confidence intervals.
