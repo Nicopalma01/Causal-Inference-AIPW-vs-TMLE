@@ -1,6 +1,34 @@
-# Causal-Inference-AIPW-vs-TMLE
-This project investigates how reliably modern causal inference methods can recover a known treatment effect when the data are observational and heavily confounded. Using the National Supported Work (NSW) job-training experiment as a benchmark, I combined its 185 treated units with roughly 15,000 control units from the PSID/CPS surveys, deliberately recreating strong selection bias and poor overlap between treated and untreated groups.
+# Causal ATE estimation: AIPW vs TMLE
 
-I compared two doubly robust estimators of the Average Treatment Effect: Augmented Inverse Probability Weighting (AIPW) and Targeted Maximum Likelihood Estimation (TMLE), the latter in both a machine-learning and a deep-learning variant. Propensity scores were estimated generatively, using class-conditional Gaussian Mixture Models and Bayes’ theorem, with the number of components chosen to balance overlap and BIC. Coarsened Exact Matching was used to pre-balance the data, while Random Forest, Gradient Boosting and a fully connected neural network served as outcome models, tuned through nested cross-validation.
+This project compares two doubly robust estimators of the Average Treatment Effect, AIPW and TMLE (with machine-learning and deep-learning outcome models), on the National Supported Work (LaLonde) experimental sample combined with PSID/CPS controls. It evaluates accuracy against the experimental benchmark, efficiency (standard error) and behavior under poor overlap.
 
-Results were evaluated against the experimental benchmark of 1794.34. TMLE with a neural-network outcome model came closest (1773.69) with the smallest standard error, while AIPW and TMLE with tree-based models remained far from the benchmark, with wide confidence intervals.
+## Repository structure
+- `notebooks/` – AIPW and TMLE notebooks
+- `data/` – NSW sample, CPS/PSID controls and matched/raw datasets
+- `docs/` – full project report (English and Italian)
+
+## Methods
+- Doubly robust estimation: AIPW and TMLE
+- Propensity score via class-conditional Gaussian Mixture Models and Bayes' theorem
+- Coarsened Exact Matching on the combined dataset
+- Outcome models: Random Forest, Gradient Boosting, fully-connected neural network
+
+## Results
+| Method | Estimate | SE | 95% CI |
+|---|---|---|---|
+| AIPW (ATE) | 384.63 | 367.88 | [-336.41, 1105.66] |
+| TMLE (ML) | 194.30 | 356 | [-503, 892] |
+| TMLE (Deep Learning) | 1773.69 | 190 | [1401, 2147] |
+| Experimental benchmark | 1794.34 | - | - |
+
+## Libraries
+numpy, pandas, scikit-learn, keras, cem, PyALE
+
+## Report
+See `docs/report_en.pdf`.
+
+## References
+LaLonde, R. (1986). Evaluating the econometric evaluations of training programs with experimental data. American Economic Review.
+
+## Author
+Nicola Palmieri
